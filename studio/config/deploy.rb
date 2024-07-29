@@ -62,6 +62,8 @@ namespace :deploy do
     before "symlink:release", "composer:install"
     before "symlink:release", "composer:dump_autoload"
     before "symlink:release", "laravel:permissions"
+    before "symlink:release", "laravel:clear_cache"
+    before "symlink:release", "laravel:clear_config"
     before "symlink:release", "laravel:migrate"
     before "symlink:release", "laravel:queue_restart"
     before "symlink:release", "laravel:storage_link"
@@ -71,6 +73,9 @@ namespace :deploy do
       before "symlink:release", "yarn:production"
       #after :finished, "supervisord:reload"
     #end
+
+    # Set correct permissions for all files and directories
+    after :finishing, 'permissions:set'
 
     before :cleanup, :cleanup_set_sudo
 

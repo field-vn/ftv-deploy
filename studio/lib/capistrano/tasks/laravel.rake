@@ -27,6 +27,15 @@ namespace :laravel do
     end
   end
 
+  desc "Run Artisan config:clear task"
+  task :clear_config do
+    on roles(:web) do
+      within release_path do
+        execute :php, "artisan config:clear"
+      end
+    end
+  end
+
   desc "Run Artisan clear-compiled & optimize task"
   task :optimize do
     on roles(:web) do
